@@ -8,6 +8,9 @@ class DealerListCreate(generics.ListCreateAPIView):
     serializer_class = DealerSerializer
     permission_classes = [IsAuthenticated]
 
+    def perform_create(self, serializer):
+        serializer.save()
+
 class DealerRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Dealer.objects.all()
     serializer_class = DealerSerializer

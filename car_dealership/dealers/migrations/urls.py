@@ -1,7 +1,17 @@
-from django.urls import path
-from . import views
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from .models import Purchase
+from .serializers import PurchaseSerializer
 
-urlpatterns = [
-    path('', views.DealerListCreate.as_view(), name='dealer-list-create'),
-    path('<int:pk>/', views.DealerRetrieveUpdateDestroy.as_view(), name='dealer-detail'),
-]
+class PurchaseListCreate(generics.ListCreateAPIView):
+    queryset = Purchase.objects.all()
+    serializer_class = PurchaseSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+class PurchaseRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Purchase.objects.all()
+    serializer_class = PurchaseSerializer
+    permission_classes = [IsAuthenticated]

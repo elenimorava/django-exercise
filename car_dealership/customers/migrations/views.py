@@ -8,7 +8,11 @@ class CustomerListCreate(generics.ListCreateAPIView):
     serializer_class = CustomerSerializer
     permission_classes = [IsAuthenticated]
 
+    def perform_create(self, serializer):
+        serializer.save()
+
 class CustomerRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
     permission_classes = [IsAuthenticated]
+
